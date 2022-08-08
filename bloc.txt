@@ -1,0 +1,60 @@
+BLOC - Bloc is design pattern created by google, to help seperate business logic from the presentation layer. In Flutter the best way to keep your code organize, clean and maintainable is to have a componant which can mediate UI and Backend (Data).
+
+
+
+Don't call logic directly, bcs we use bloc for seperation of logic... Use events instead (in UI). 
+
+
+
+
+enum CounterAction { Increment, Decrement, Reset }
+
+class CounterBloc {
+  int counter;
+  final _stateStreamController = StreamController<int>();
+  StreamSink<int> get _counterSink => _stateStreamController.sink;
+  Stream<int> get counterStream => _stateStreamController.stream;
+
+  final _eventStreamController = StreamController<CounterAction>();
+  StreamSink<CounterAction> get eventSink => _eventStreamController.sink;
+  Stream<CounterAction> get _eventStream => _eventStreamController.stream;
+
+  CounterBloc() {
+    counter = 0;
+
+    _eventStream.listen((event) {
+      if (event == CounterAction.Increment)
+        counter++;
+      else if (event == CounterAction.Decrement)
+        counter--;
+      else if (event == CounterAction.Reset) counter = 0;
+
+      _counterSink.add(counter);
+    });
+  }
+}
+
+
+
+
+StreamBuilder(
+              stream: counterBloc.counterStream,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return Text(
+                  '${snapshot.data}',
+                  style: Theme.of(context).textTheme.headline4,
+                );
+              },
+              );
+              
+              
+            
+            
+            onPressed: () {
+              counterBloc.eventSink.add(CounterAction.Increment);
+            },
+              
+              
+              
+              
