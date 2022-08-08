@@ -1,0 +1,91 @@
+Provider is a wrapper around InheritedWidget to make them easier to use and more reusable
+There are mainly 6 types of providers,
+
+
+
+
+1. Provider - 
+
+Provider<T>{
+create : (contect) => T,
+child : ;
+}
+
+
+final getValue = Provider.of<T>(context);
+
+
+
+
+
+2. FutureProvider - Provider that listens to a Future object and Provide its value to a child and decendants
+
+FutureProvider<T>{
+initialData : T,
+create : (context) => ,
+child : ;
+}
+
+
+
+
+
+
+3. StreamProvider - 
+
+StreamProvider<T>{
+initialData : T,
+create : (context) => T.asStream(),
+child : ;
+}
+
+
+
+
+
+4. MultiProvider - Combine multiple providers into single linear widget tree
+
+MultiProvider(
+providers : [
+StreamProvider<T>{
+initialData : T,
+create : (context) => T,
+},
+FutureProviders<T>{
+initialData : T,
+create : (context) => T,
+}
+child : ;
+]
+)
+
+
+
+
+5. ProxyProvider - Build a value based on other Providers
+
+ProxyProvider2<T,T, Return_T>(update : (context, v1, v2, RT){
+return RT;
+}
+)
+
+final rT = Provider.of<rT>(context);
+
+
+
+
+
+
+6. ChangeNotifierProvider - Listen to a ChangeNotifier and rebuild tree whenever notifyListener is called
+
+ChangeNotifierProvider<T_Notifier>{
+create : (context) => T_Notifier,
+child : ;
+}
+
+
+final tNotifier = Provider.of<T_Notifier>(context);
+
+onPressed(){
+T_Notifier.function();
+}
