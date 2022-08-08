@@ -1,0 +1,22 @@
+class SwitchChanged extends Notification {
+  final bool val
+  SwitchChanged(this.val);
+}
+
+
+
+onPressed: () {
+  SwitchChanged(true).dispatch(context);
+}
+
+
+
+NotificationListener<SwitchChanged>(
+  child: YourParent(...),
+  onNotification: (n) {
+    setState(() {
+      // Trigger action on parent via setState or do whatever you like.
+    });
+    return true;
+  }
+)
